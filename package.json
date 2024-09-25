@@ -1,0 +1,19 @@
+{
+  "name": "devtinder-be",
+  "version": "1.0.0",
+  "description": "Tinder for devs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch src/app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Mohit Pandey",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
