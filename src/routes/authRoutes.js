@@ -1,5 +1,5 @@
 const express = require('express');
-const validateSignUpData = require("../utils/validation");
+const { validateSignUpData } = require("../utils/validation");
 const User = require('../models/user');
 const bcrypt = require('bcrypt')
 
@@ -9,14 +9,14 @@ const authRouter = express.Router();
 
 // login api
 authRouter.post("/login", async (req, res) => {
-    const { email, password } = req.body;
+    const { emailId, password } = req.body;
 
     try {
         //check if email is present
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ emailId: emailId });
 
         if (!user) {
-            res.status(400).send("User not found");
+            return res.status(400).send("User not found");
         }
 
         const isPasswordValid = await user.validatePassword(password);
@@ -40,24 +40,31 @@ authRouter.post("/signup", async (req, res) => {
         // Validation of data
         validateSignUpData(req);
         // Encrypt the data
-        const { firstName, lastName, email, password } = req.body;
+        const { firstName, lastName, emailId, password } = req.body;
         const hashPassword = await bcrypt.hash(password, 10);
 
         const userObj = {
             firstName,
             lastName,
-            email,
+            emailId,
             password: hashPassword,
         };
 
         // Creating new instance of user model.
         const user = new User(userObj);
 
-        res.send("User Added successfully");
         await user.save();
+        res.send("User Added successfully");
     } catch (error) {
         res.status(400).send(error + " Something went wrong");
     }
 });
+
+authRouter.post('/logout', async (req, res) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now())
+    })
+        .send("Log Out Success ")
+})
 
 module.exports = authRouter

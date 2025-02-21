@@ -23,3 +23,17 @@
 ### Express.ROuter()
 
 - For better route management.
+
+### Mongoose Concepts
+
+- logical queries in mongoose
+- Schema Methods
+- Schema Validations -- pre hook in mongoose
+- Index in DB
+- Compund Index
+
+- Build relation - ref, populate()
+
+### Extras.
+
+- Diff between GET and POST api methods.
